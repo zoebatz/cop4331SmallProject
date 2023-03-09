@@ -23,7 +23,7 @@ if (isset($_SESSION["user_id"])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contact Manager</title>
+    <title style="text-align:center;">Contact Manager</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,85 @@ if (isset($_SESSION["user_id"])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
- 
+    <style>
+        * {box-sizing: border-box;}
+
+        body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+        overflow: hidden;
+        background-color: #e6e6fa;
+        }
+
+        .topnav a {
+        float: left;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+
+        .topnav a.active {
+        background-color: #2196F3;
+        color: white;
+        }
+
+        .topnav .search-container {
+        float: right;
+        }
+
+        .topnav input[type=text] {
+        padding: 6px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        font-size: 17px;
+        border: none;
+        }
+
+        .topnav .search-container button {
+        float: right;
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        margin-right: 16px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+        }
+
+        .topnav .search-container button:hover {
+        background: #ccc;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav .search-container {
+                float: none;
+            }
+            .topnav a, .topnav input[type=text], .topnav .search-container button {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+            .topnav input[type=text] {
+                border: 1px solid #ccc;  
+            }
+        }
+
+    </style>
 </head>
 <body style = "background-color:#E6E6FA;">
 
@@ -46,7 +124,17 @@ if (isset($_SESSION["user_id"])) {
         
     <p>Hello <?= ($user["userName"]) ?></p>
     <p>Below are your contacts.</p>
-    <div class="panel panel-success">						 
+
+    <div class="topnav">
+        <div class="search-container">
+            <form action="search.php" method="post">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-success" style="margin:10px">						 
 		<div class="panel-body">
 			<div class="row">
             <a class="btn btn-primary" href="createContact.html" role="button">Add Contact</a>
@@ -54,8 +142,7 @@ if (isset($_SESSION["user_id"])) {
 					<table id= "table"class="table table-hover"data-show-columns="true"data-height="460"></table>
                 </div>
             </div>
-		</div>
-                           
+		</div>               
 	</div>           
     <p><a href="logout.php">Log out</a></p>
         
@@ -223,14 +310,12 @@ if (isset($_SESSION["user_id"])) {
             
         }
         
-
-
   }
   //table value format created in jquery
 	 var $table = $('#table');
 		     $table.bootstrapTable({
 			      url: 'showContacts.php',
-			      search: true,
+			      
 			      pagination: true,
 			      buttonsClass: 'primary',
 			      showFooter: false,
@@ -238,7 +323,7 @@ if (isset($_SESSION["user_id"])) {
 			      columns: [{
 			          field: 'num',
 			          title: '#',
-			          sortable: true,
+			    `      sortable: true,
 			      },{
 			          field: 'id',
 			          title: 'id',
@@ -268,6 +353,10 @@ if (isset($_SESSION["user_id"])) {
 			          sortable: true,
 			   
 			      },{
+                      field: 'dateCreated',
+                      title: 'Date Created',
+                      sortable: true,
+                  },{
                     field: 'operate',
                     title: 'Edit/Delete',
                     align: 'center',
@@ -278,6 +367,7 @@ if (isset($_SESSION["user_id"])) {
                   ],
  
   			 });
+
 
 
 
